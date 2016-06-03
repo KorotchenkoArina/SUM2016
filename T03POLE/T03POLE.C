@@ -1,4 +1,4 @@
-#include <stdio.h>
+ #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
 #include <windows.h>
@@ -30,14 +30,14 @@ INT WINAPI WinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, CHAR *CmdLine,
 
    if (!RegisterClass(&wc))
    {
-     MessageBox(NULL, "Error register window class","ERROR", MB_OK | MB_ICONERROR);
+     MessageBox(NULL, "Error register window class","ERROR", MB_OK);
      return 0;
    }
 
    /* Create window */
    hWnd =
      CreateWindow(WND_CLASS_NAME,
-     "MyLovelyClocks <3", 
+     "~MAGNITNOE POLE~", 
      WS_OVERLAPPEDWINDOW,
      CW_USEDEFAULT, CW_USEDEFAULT,
      CW_USEDEFAULT, CW_USEDEFAULT,
@@ -52,17 +52,29 @@ INT WINAPI WinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, CHAR *CmdLine,
    while (GetMessage(&msg, NULL, 0, 0))
      DispatchMessage(&msg);
    return msg.wParam;
-} /* End of MinMain function */
+} /* End of "MinMain" function */
+
+  /*Handle drawing function*/
+VOID DrawHandle( HDC hDC, INT X, INT Y, DOUBLE K)
+{
+  static POINT pt1[5] = 
+  {
+    {}, {}, {}, {}, {}
+  };
+  POINT pts2[sizeof(pt) / sizeof(pt[0])]; 
+  {
+    {} , {}, {}
+  };
+
+  Polygon(hDC, pts1, 3);
+  Polygon(hDC, pts2, 3);
+} /*End of Handle drawing function*/
 
 /* Window message handle function */
 LRESULT CALLBACK MyWindowFunc( HWND hWnd, UINT Msg, WPARAM wParam, LPARAM lParam )
 {
   HDC hDC;
   PAINTSTRUCT ps;
-  DOUBLE a, r;
-  CHAR s[30]; 
-  HPEN hPen;
-  static SYSTEMTIME SystemTime;
   static INT w, h;
   static BITMAP bm;
   static HBITMAP hBm, hBmLogo;
@@ -96,39 +108,8 @@ LRESULT CALLBACK MyWindowFunc( HWND hWnd, UINT Msg, WPARAM wParam, LPARAM lParam
     return 0;
   case WM_TIMER:
     Rectangle(hMemDC, 0, 0, w + 1, h + 1);
-    BitBlt(hMemDC, (w - bm.bmWidth) / 2, (h - bm.bmHeight) / 2, bm.bmWidth, bm.bmHeight, hMemDCLogo, 0, 0, SRCCOPY);
-    GetLocalTime(&SystemTime);
-
-    /*Strelki*/
-    a = (SystemTime.wSecond + SystemTime.wMilliseconds / 1000.0) * 2 * 3.1415926535 / 60;
-    r = bm.bmWidth / 2.2;
-    hPen = CreatePen(PS_SOLID, 3, RGB(0x80, 0, 0x80));
-    SelectObject(hMemDC, hPen);
-    MoveToEx(hMemDC, w / 2, h / 2, NULL);
-    LineTo(hMemDC, w / 2 + sin(a) * r, h / 2 - cos(a) * r);
-    DeleteObject(hPen);
-
-    a = SystemTime.wMinute * 2 * 3.1415926535 / 60;
-    r = bm.bmWidth / 3.2;
-    hPen = CreatePen(PS_SOLID, 6, RGB(0, 0, 0));
-    SelectObject(hMemDC, hPen);
-    MoveToEx(hMemDC, w / 2, h / 2, NULL);
-    LineTo(hMemDC, w / 2 + sin(a) * r, h / 2 - cos(a) * r);
-    DeleteObject(hPen);
-
-    a = (SystemTime.wHour % 12 + SystemTime.wMinute / 60.0) * 2 * 3.1415926535 / 12;
-    r = bm.bmWidth / 4.2;
-    hPen = CreatePen(PS_SOLID, 6, RGB(0, 0, 0));
-    SelectObject(hMemDC, hPen);
-    MoveToEx(hMemDC, w / 2, h / 2, NULL);
-    LineTo(hMemDC, w / 2 + sin(a) * r, h / 2 - cos(a) * r);
-    DeleteObject(hPen);
-
-    /*Day, Month, Year*/
-    SetTextColor(hMemDC, RGB(255, 0, 255));
-    TextOut(hMemDC, w / 2 - 26, h / 2 + h / 3, s, 
-      sprintf(s, "%02i, %02i, %04i", SystemTime.wDay, SystemTime.wMonth, SystemTime.wYear));
-
+    BitBlt(hMemDC, (w - bm.bmWidth) / 2, (h - bm.bmHeight) / 2, bm.bmWidth, bm.bmHeight, hMemDCLogo, 0, 0, SRCCOPY); 
+    DrawHandle(hMemDC, 100, 200, 100); 
     /* VOID WINAPI GetLocalTime(lpSystemTime); */
     InvalidateRect(hWnd, NULL, FALSE);
     return 0;
@@ -147,4 +128,4 @@ LRESULT CALLBACK MyWindowFunc( HWND hWnd, UINT Msg, WPARAM wParam, LPARAM lParam
   return DefWindowProc(hWnd, Msg, wParam, lParam);
 } /* End of 'MyWindowFunc' function */
 
-/* END OF 'T02CLOCK.C' FILE */
+/* END OF 'T03POLE.C' FILE */
