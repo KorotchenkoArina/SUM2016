@@ -1,6 +1,9 @@
+#include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
 #include <windows.h>
+
+#pragma warning(disable: 4244)
 
 #define WND_CLASS_NAME "My window class"
 
@@ -57,6 +60,8 @@ LRESULT CALLBACK MyWindowFunc( HWND hWnd, UINT Msg, WPARAM wParam, LPARAM lParam
   HDC hDC;
   PAINTSTRUCT ps;
   DOUBLE a, r;
+  CHAR s[30];
+  INT x; 
   static SYSTEMTIME SystemTime;
   static INT w, h;
   static BITMAP bm;
@@ -79,7 +84,7 @@ LRESULT CALLBACK MyWindowFunc( HWND hWnd, UINT Msg, WPARAM wParam, LPARAM lParam
   case WM_SIZE:
     w = LOWORD(lParam);
     h = HIWORD(lParam);
-    if(hBm != NULL)
+    if (hBm != NULL)
       DeleteObject(hBm);
     hDC = GetDC(hWnd);
     hBm = CreateCompatibleBitmap(hDC, w, h);
@@ -90,11 +95,11 @@ LRESULT CALLBACK MyWindowFunc( HWND hWnd, UINT Msg, WPARAM wParam, LPARAM lParam
   case WM_ERASEBKGND:
     return 0;
   case WM_TIMER:
-    CHAR s[30];
-    INT x = SystemTime.wSecond;
     Rectangle(hMemDC, 0, 0, w + 1, h + 1);
     BitBlt(hMemDC, (w - bm.bmWidth) / 2, (h - bm.bmHeight) / 2, bm.bmWidth, bm.bmHeight, hMemDCLogo, 0, 0, SRCCOPY);
     GetLocalTime(&SystemTime);
+
+    x = SystemTime.wSecond; 
 
     a = (SystemTime.wSecond + SystemTime.wMilliseconds / 1000.0) * 2 * 3.1415926535 / 60;
     r = bm.bmWidth / 2.2;
@@ -128,6 +133,8 @@ LRESULT CALLBACK MyWindowFunc( HWND hWnd, UINT Msg, WPARAM wParam, LPARAM lParam
     DeleteObject(hBm);
     PostQuitMessage(0);
     return 0;
-}
+  }
   return DefWindowProc(hWnd, Msg, wParam, lParam);
-}
+} /* End of 'MyWindowFunc' function */
+
+/* END OF 'T02CLOCK.C' FILE */
