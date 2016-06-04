@@ -1,9 +1,7 @@
- #include <stdio.h>
-#include <stdlib.h>
+#include <stdio.h>
 #include <math.h>
+#include <stdlib.h>
 #include <windows.h>
-
-#pragma warning(disable: 4244)
 
 #define WND_CLASS_NAME "My window class"
 
@@ -37,7 +35,7 @@ INT WINAPI WinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, CHAR *CmdLine,
    /* Create window */
    hWnd =
      CreateWindow(WND_CLASS_NAME,
-     "~MAGNITNOE POLE~", 
+     "~~MAGNITNOE POLE~~", 
      WS_OVERLAPPEDWINDOW,
      CW_USEDEFAULT, CW_USEDEFAULT,
      CW_USEDEFAULT, CW_USEDEFAULT,
@@ -55,19 +53,28 @@ INT WINAPI WinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, CHAR *CmdLine,
 } /* End of "MinMain" function */
 
   /*Handle drawing function*/
-VOID DrawHandle( HDC hDC, INT X, INT Y, DOUBLE K)
+VOID DrawHandle( HDC hDC, INT x, INT y, DOUBLE a)
 {
-  static POINT pt1[5] = 
+  INT i;
+  DOUBLE rad = a * 3.14159265358979 / 180, si = sin(rad), co = cos(rad);
+  static POINT pt[5] = 
   {
-    {}, {}, {}, {}, {}
+    {-10, 0}, {-10, 50}, {0, 150}, {10, 50}, {10, 0}
   };
-  POINT pts2[sizeof(pt) / sizeof(pt[0])]; 
-  {
-    {} , {}, {}
-  };
+  POINT pt1[sizeof(pt) / sizeof(pt[0])];
 
-  Polygon(hDC, pts1, 3);
-  Polygon(hDC, pts2, 3);
+  for (i = 0; i < sizeof(pt) / sizeof(pt[0]); i++)
+  {
+    pt1[i].x = x + pt[i].x * co - pt[i].y * si;
+    pt1[i].y = y - (pt[i].x * si + pt[i].y * co);
+  }/*End of for cycle*/
+  SelectObject(hDC, GetStockObject(DC_PEN));
+  SelectObject(hDC, GetStockObject(DC_BRUSH));
+  SetDCPenColor(hDC, RGB(0, 0, 0));
+  SetDCBrushColor(hDC, RGB(0xFF, 0, 0xFF));
+  GetCursorPos(&pt1);
+  ScreenToClient(hDC, &pt1);
+  Polygon(hDC, pt1, sizeof(pt) / sizeof(pt[0]));
 } /*End of Handle drawing function*/
 
 /* Window message handle function */
@@ -109,8 +116,7 @@ LRESULT CALLBACK MyWindowFunc( HWND hWnd, UINT Msg, WPARAM wParam, LPARAM lParam
   case WM_TIMER:
     Rectangle(hMemDC, 0, 0, w + 1, h + 1);
     BitBlt(hMemDC, (w - bm.bmWidth) / 2, (h - bm.bmHeight) / 2, bm.bmWidth, bm.bmHeight, hMemDCLogo, 0, 0, SRCCOPY); 
-    DrawHandle(hMemDC, 100, 200, 100); 
-    /* VOID WINAPI GetLocalTime(lpSystemTime); */
+    DrawHandle(hMemDC, 90, 90, 200); 
     InvalidateRect(hWnd, NULL, FALSE);
     return 0;
   case WM_PAINT:
@@ -118,6 +124,8 @@ LRESULT CALLBACK MyWindowFunc( HWND hWnd, UINT Msg, WPARAM wParam, LPARAM lParam
     BitBlt(hDC, 0, 0, w, h, hMemDC, 0, 0, SRCCOPY);
     EndPaint(hWnd, &ps);
     return 0;
+  case WM_MOUSEMOVE:
+    InvalidateRect(hWnd, NULL, FALSE);
   case WM_DESTROY:
     KillTimer(hWnd, 11);
     DeleteDC(hMemDC);
