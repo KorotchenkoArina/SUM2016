@@ -62,6 +62,7 @@ LRESULT CALLBACK MyWindowFunc( HWND hWnd, UINT Msg, WPARAM wParam, LPARAM lParam
   DOUBLE a, r;
   CHAR s[30]; 
   HPEN hPen;
+  HFONT hFnt;
   static SYSTEMTIME SystemTime;
   static INT w, h;
   static BITMAP bm;
@@ -125,6 +126,7 @@ LRESULT CALLBACK MyWindowFunc( HWND hWnd, UINT Msg, WPARAM wParam, LPARAM lParam
     DeleteObject(hPen);
 
     /*Day, Month, Year*/
+    hFnt = CreateFont(15, 5, 0, 0, FW_REGULAR, FALSE, FALSE, FALSE,RUSSIAN_CHAPSET, OUT_
     SetTextColor(hMemDC, RGB(255, 0, 255));
     TextOut(hMemDC, w / 2 - 26, h / 2 + h / 3, s, 
       sprintf(s, "%02i, %02i, %04i", SystemTime.wDay, SystemTime.wMonth, SystemTime.wYear));
