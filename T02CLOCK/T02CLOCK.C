@@ -126,10 +126,11 @@ LRESULT CALLBACK MyWindowFunc( HWND hWnd, UINT Msg, WPARAM wParam, LPARAM lParam
     DeleteObject(hPen);
 
     /*Day, Month, Year*/
-    hFnt = CreateFont(15, 5, 0, 0, FW_REGULAR, FALSE, FALSE, FALSE,RUSSIAN_CHAPSET, OUT_
+    hFnt = CreateFont(50, 15, 0, 0, FW_REGULAR, FALSE, FALSE, FALSE, RUSSIAN_CHARSET, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS, DEFAULT_QUALITY, FIXED_PITCH | FF_SCRIPT, "Bookman Old Style");
+    SelectObject(hMemDC, hFnt);
     SetTextColor(hMemDC, RGB(255, 0, 255));
-    TextOut(hMemDC, w / 2 - 26, h / 2 + h / 3, s, 
-      sprintf(s, "%02i, %02i, %04i", SystemTime.wDay, SystemTime.wMonth, SystemTime.wYear));
+    TextOut(hMemDC, w / 2 - 78, h / 2 + h / 3, s, 
+      sprintf(s, "%02i %02i %04i", SystemTime.wDay, SystemTime.wMonth, SystemTime.wYear));
 
     /* VOID WINAPI GetLocalTime(lpSystemTime); */
     InvalidateRect(hWnd, NULL, FALSE);
