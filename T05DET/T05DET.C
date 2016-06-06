@@ -4,10 +4,13 @@ Programmer: AK2
 Date: 06.06.2016
 */
 #define MAX 3
+
 #include <stdio.h>
+
 int N;
 int P[MAX], Parity = 0;
 double A[MAX][MAX], sum = 0;
+
 /*start of "LoadMatrix" function*/
 void LoadMatrix( char *FileName )
 {
@@ -44,36 +47,40 @@ void Swap( int *A, int *B )
 void Go( int Pos )
 {
   int i;
+  double prod = 1;
 
-  if (Pos == N)
-    return;
-  else
+ if (Pos == N)
   {
-    for (i = Pos; i < N; i++)
-    {
-      if (Pos != i)
-        Swap(&P[Pos], &P[i]), Parity = !Parity;
-      Go(Pos + 1);
-      if (Pos != i)
-        Swap(&P[Pos], &P[i]), Parity = !Parity;
-    }
+    for(i = 0; i < N; i++) 
+      prod *= A[i][P[i]];
+    if (Parity == 0)
+      sum += prod;
+    else
+      sum -= prod;
+    return;
   }
+ else
+ {
+   Go(Pos + 1);
+   for (i = Pos + 1; i < N; i++)
+   {
+     Swap(&P[Pos], &P[i]);
+     Parity = !Parity;
+     Go(Pos + 1);
+     Swap(&P[Pos], &P[i]);
+     Parity = !Parity;
+   }
+ }
 }
 
 double EvalDeterminant( char *FileName )
 {
   int i;
-  double prod = 1;
 
   LoadMatrix(FileName);
-  for(i = 0; i < N; i++, prod *= A[i][P[i]])
-  { 
+  sum = 0;
+  for (i = 0; i < N; i++)
     P[i] = i;
-    if (Parity == 0)
-      sum += prod;
-    else
-      sum -= prod;
-  }
   Go(0);
   return sum;
 }
@@ -83,7 +90,7 @@ void main( void )
   int i;
   char *M[] =
   {
-    "m.txt", "m1.txt", "m4.txt" 
+    "mat1.txt"
   } ;
 
   for (i = 0; i < sizeof(M) / sizeof(M[0]); i++)
