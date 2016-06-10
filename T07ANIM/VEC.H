@@ -3,19 +3,23 @@ Programmer: AK2
 Programm: T07ANIM
 Date: 08.06.2016
 */
+#ifndef __VEC_H_
+#define __VEC_H_
+
 #include <math.h>
 #include <stdlib.h>
 
 #include <windows.h>
 
-#ifndef __VEC_H_
-#define __VEC_H_
+
 
 #define PI 3.14159265358979323846
 #define D2R(A) ((A) * PI / 180.0)
 
 /* Basic double type */
 typedef double DBL;
+/* Basic float type */
+typedef double FLT;
 
 /* type for vec at spase */
 typedef struct tagVEC
@@ -89,7 +93,7 @@ __inline DBL VecLen( VEC V )
   return len;
 }
 // End of "VecLen" function
-__inline VEC VecNormalize( VEC V ); 
+__inline VEC VecNormalize( VEC V ) 
 {
   DBL len = VecDotVec(V, V);
 
@@ -142,7 +146,7 @@ __inline MATR MatrTranslate( VEC D )
   return M;
 }
 // End of "MatrTranslate" function
-VEC V = PointTransform(VecSet(1, 2, 3), MatrTranslate(VecSet(4, 0, 0)));
+//VEC V = PointTransform(VecSet(1, 2, 3), MatrTranslate(VecSet(4, 0, 0)));
 
 __inline MATR MatrScale( VEC S )
 {
@@ -155,7 +159,7 @@ __inline MATR MatrScale( VEC S )
       {   0,    0,    0,  1}
     }
   };
-  return M
+  return M;
 }
 // End of "MatrScale" function
 __inline MATR MatrRotateX( DBL AngleDegree )
@@ -164,10 +168,10 @@ __inline MATR MatrRotateX( DBL AngleDegree )
   MATR M = 
   {
     {
-      {  1,   0,   0, 0};
-      {  0,  co,  si, 0};
-      {  0, -si,  co, 0};
-      {  0,   0,   0, 1};
+      {  1,   0,   0, 0},
+      {  0,  co,  si, 0},
+      {  0, -si,  co, 0},
+      {  0,   0,   0, 1},
     }
   };
   return M;
@@ -179,10 +183,10 @@ __inline MATR MatrRotateY( DBL AngleDegree )
   MATR M = 
   {
     {
-      {co,  0,  0, -si};
-      { 0,  1,  0,   0};
-      {si,  0, co,   0};
-      { 0,  0,  0,   1};
+      {co,  0,  0, -si},
+      { 0,  1,  0,   0},
+      {si,  0, co,   0},
+      { 0,  0,  0,   1},
     }
   };
   return M;
@@ -194,10 +198,10 @@ __inline MATR MatrRotateZ( DBL AngleDegree )
   MATR M = 
   {
     {
-      { co, si, 0, 0};
-      {-si, co, 0, 0};
-      {  0,  0, 1, 0};
-      {  0,  0, 0, 1};
+      { co, si, 0, 0},
+      {-si, co, 0, 0},
+      {  0,  0, 1, 0},
+      {  0,  0, 0, 1},
     }
   };
   return M;
@@ -238,6 +242,7 @@ __inline MATR MatrIdentity( VOID )
 __inline MATR MatrMulMatr( MATR M1, MATR M2 )
 {
   MATR r;
+  INT i, j, k;
 
   for (i = 0; i < 4; i++)
     for (j = 0; j < 4; j++)
@@ -257,14 +262,15 @@ __inline MATR MatrTranspose( MATR M )
   return r;
 }
 
-__inline vDBL MatrDeterm3x3( DBL A11, DBL A12, DBL A13,
-                   DBL A21, DBL A22, DBL A23,
-                   DBL A31, DBL A32, DBL A33 )
+__inline DBL MatrDeterm3x3( DBL A11, DBL A12, DBL A13,
+                             DBL A21, DBL A22, DBL A23,
+                             DBL A31, DBL A32, DBL A33 )
 {
   return A11 * A22 * A33 + A12 * A23 * A31 + A13 * A21 * A32 -
          A11 * A23 * A32 - A12 * A21 * A33 - A13 * A22 * A31;
 }
 // End of "MatrTranspose" function
+
 __inline DBL MatrDeterm( MATR M )
 {
   return
@@ -342,5 +348,9 @@ __inline MATR MatrInverse( MATR M )
                              M.A[2][0], M.A[2][1], M.A[2][2]) / det;
 }
 // End of "MatrInverse" function
+
+#endif /* __VEC_H_ */
+
+// End of "Vec.H" file
 
 
