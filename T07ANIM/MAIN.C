@@ -1,11 +1,6 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <math.h>
-#include <windows.h>
+#include "anim.h"
 
 #pragma warning(disable: 4244)
-
-SetDbgMemHooks();
 
 #define WND_CLASS_NAME "My window class"
 
@@ -17,6 +12,7 @@ INT WINAPI WinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, CHAR *CmdLine,
    WNDCLASS wc;
    HWND hWnd;
    MSG msg;
+   SetDbgMemHooks();
 
    /* Create window class */
    wc.style = CS_VREDRAW | CS_HREDRAW;
@@ -61,31 +57,42 @@ LRESULT CALLBACK MyWindowFunc( HWND hWnd, UINT Msg, WPARAM wParam, LPARAM lParam
 {
   HDC hDC;
   PAINTSTRUCT ps;  
-  DOUBLE a, r;
-  static INT w, h;
+  MINMAXINFO *MinMax;
 
   switch (Msg)
   {
+  case WM_GETMINMAXINFO:
+    MinMax = (MINMAXINFO *)lParam;
+    MinMax->ptMaxTrackSize.y =
+      GetSystemMetrics(SM_CYMAXTRACK) +
+      GetSystemMetrics(SM_CYCAPTION) +
+      GetSystemMetrics(SM_CYMENU) +
+      GetSystemMetrics(SM_CYBORDER) * 2;
+    return 0;
   case WM_CREATE:
     SetTimer(hWnd, 11, 2, NULL);
     AK2_AnimInit(hWnd);
-    hDC = GetDC(hWnd);
-    ReleaseDC(hWnd, hDC);
     return 0;
   case WM_SIZE:
-    w = LOWORD(lParam);
-    h = HIWORD(lParam);
+    AK2_AnimResize(LOWORD(lParam), HIWORD(lParam));
+    SendMessage(hWnd, WM_TIMER, 0, 0); 
+    return 0;
+  case WM_MOUSEWHEEL:
+    AK2_MouseWheel += (SHORT)HIWORD(wParam);
     return 0;
   case WM_ERASEBKGND:
     return 0;
   case WM_TIMER:
+    AK2_AnimRender();
     InvalidateRect(hWnd, NULL, FALSE);
     return 0;
   case WM_PAINT:
     hDC = BeginPaint(hWnd, &ps);
+    AK2_AnimCopyFrame(hDC);
     EndPaint(hWnd, &ps);
     return 0;
   case WM_DESTROY:
+    AK2_AnimClose();
     KillTimer(hWnd, 11);
     PostQuitMessage(0);
     return 0;

@@ -9,6 +9,8 @@ Date: 10.06.2016
 
 #include <windows.h>
 
+#pragma warning(disable: 4244 4305)
+
 /* Debug memory allocation support */
 #ifdef _DEBUG
 #  define _CRTDBG_MAP_ALLOC
@@ -19,10 +21,11 @@ Date: 10.06.2016
 #else /* _DEBUG */
 #  define SetDbgMemHooks() ((VOID)0)
 #endif /* _DEBUG */
-
 #include <stdlib.h>
 /* !!! в начале WinMain: SetDbgMemHooks(); */
-
 #include "vec.h"
-
+//64-bit integer data types
+typedef __int64 INT64;
+typedef unsigned __int64 UINT64;
 #endif /* __DEF_H_ */
+// End of "DEF.H" file

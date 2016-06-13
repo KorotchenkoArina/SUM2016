@@ -3,7 +3,7 @@
  * DATE: 08.06.2016
  */
 
-#include <windows.h>
+/*#include <windows.h>
 
 #include "vec.h"
 
