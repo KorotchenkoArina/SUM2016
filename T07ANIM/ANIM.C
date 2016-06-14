@@ -45,6 +45,12 @@ VOID AK2_AnimInit( HWND hWnd )
   QueryPerformanceCounter(&t);
   AK2_StartTime = AK2_OldTime = AK2_OldTimeFPS = t.QuadPart;
   AK2_PauseTime = 0;
+
+  AK2_RndProjDist = 0.1;
+  AK2_RndFarClip = 100;
+  AK2_RndProjSize = 0.1;
+
+  AK2_RndMatrView = MatrView(VecSet(8, 7, 6), VecSet(0, 0, 0), VecSet(0, 1, 0));
 }
 VOID AK2_AnimClose( VOID )
 {
@@ -68,8 +74,11 @@ VOID AK2_AnimResize( DBL W, DBL H )
     DeleteObject(AK2_Anim.hFrame);
   hDC = GetDC(AK2_Anim.hWnd);
   AK2_Anim.hFrame = CreateCompatibleBitmap(hDC, W, H);
+
   ReleaseDC(AK2_Anim.hWnd, hDC);
   SelectObject(AK2_Anim.hDC, AK2_Anim.hFrame); 
+
+  AK2_RndSetProj();
 }
 VOID AK2_AnimCopyFrame( HDC hDC)
 {
@@ -168,6 +177,7 @@ VOID AK2_AnimRender( VOID )
     SetDCPenColor(AK2_Anim.hDC, RGB(0, 0, 0));
     SetDCBrushColor(AK2_Anim.hDC, RGB(255,255, 255));
 
+    AK2_RndMatrWorld = MatrIdentity();
     AK2_Anim.Units[i]->Render(AK2_Anim.Units[i], &AK2_Anim);
   }                        
 }

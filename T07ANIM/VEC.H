@@ -68,7 +68,7 @@ __inline VEC VecNeg( VEC A )
 // End of "VecNeg" function
 __inline DBL VecDotVec( VEC A, VEC B )
 {
-  return A.X * B.X + A.Y * B.X + A.Z * B.Z; 
+  return A.X * B.X + A.Y * B.Y + A.Z * B.Z; 
 }
 // End of "VecDotVec" function
 __inline VEC VecCrossVec( VEC A, VEC B )
@@ -192,7 +192,7 @@ __inline MATR MatrRotateY( DBL AngleDegree )
   MATR M = 
   {
     {
-      {co,  0,  0, -si},
+      {co,  0,  -si, 0},
       { 0,  1,  0,   0},
       {si,  0, co,   0},
       { 0,  0,  0,   1},
@@ -358,7 +358,8 @@ __inline MATR MatrInverse( MATR M )
 }
 // End of "MatrInverse" function
 
-__inline MATR MatrFrustum( DBL l, DBL r, DBL b, DBL t, DBL n, DBL f ){
+__inline MATR MatrFrustum( DBL l, DBL r, DBL b, DBL t, DBL n, DBL f )
+{
   MATR M =
   {
     {
@@ -366,6 +367,25 @@ __inline MATR MatrFrustum( DBL l, DBL r, DBL b, DBL t, DBL n, DBL f ){
       {                0, (2 * n) / (t - b),                      0,  0},
       {(r + l) / (r - l), (t + b) / (t - b),     -(f + n) / (f - n), -1},
       {                0,                 0, -(2 * n * f) / (f - n),  0}
+    }
+  };
+
+  return M;
+}
+
+__inline MATR MatrView( VEC Loc, VEC At, VEC Up1 )
+{
+  VEC
+    Dir = VecNormalize(VecSubVec(At, Loc)),
+    Right = VecNormalize(VecCrossVec(Dir, Up1)),
+    Up = VecNormalize(VecCrossVec(Right, Dir));
+  MATR M = 
+  {
+    {
+      {Right.X, Up.X, -Dir.X, 0},
+      {Right.Y, Up.Y, -Dir.Y, 0},
+      {Right.Z, Up.Z, -Dir.Z, 0},
+      {-VecDotVec(Loc, Right), -VecDotVec(Loc, Up), VecDotVec(Loc, Dir), 1}
     }
   };
 

@@ -25,15 +25,17 @@ VOID AK2_RndSetProj( VOID )
   DBL ratio_x = 1, ratio_y = 1;
 
   if (AK2_Anim.W >= AK2_Anim.H)
-  ratio_x = (DBL)AK2_Anim.W / AK2_Anim.H;
+    ratio_x = (DBL)AK2_Anim.W / AK2_Anim.H;
   else
-  ratio_y = (DBL)AK2_Anim.H / AK2_Anim.W;
+    ratio_y = (DBL)AK2_Anim.H / AK2_Anim.W;
   AK2_RndMatrProj = MatrFrustum(-ratio_x * AK2_RndProjSize / 2,
-  ratio_x * AK2_RndProjSize / 2,
-  -ratio_y * AK2_RndProjSize / 2,
-  ratio_y * AK2_RndProjSize / 2,
-  AK2_RndProjDist, AK2_RndFarClip);
-} /* End of 'AK2_RndSetProj' function */VOID AK2_RndPrimDraw( ak2PRIM *Pr )
+                                ratio_x * AK2_RndProjSize / 2,
+                                -ratio_y * AK2_RndProjSize / 2,
+                                ratio_y * AK2_RndProjSize / 2,
+                                AK2_RndProjDist, AK2_RndFarClip);
+} /* End of 'AK2_RndSetProj' function */
+
+VOID AK2_RndPrimDraw( ak2PRIM *Pr )
 {
   INT i;
   MATR M;
@@ -65,11 +67,15 @@ VOID AK2_RndSetProj( VOID )
     LineTo(AK2_Anim.hDC, pts[n1].x, pts[n1].y);
   }
   free(pts);
-} /* End of 'AK2_RndPrimDraw' function */VOID AK2_RndPrimFree( ak2PRIM *Pr )
+} /* End of 'AK2_RndPrimDraw' function */
+
+VOID AK2_RndPrimFree( ak2PRIM *Pr )
 {
   if (Pr->P != NULL)
     free(Pr->P);
   if (Pr->Edges != NULL)
     free(Pr->Edges);
   memset(Pr, 0, sizeof(ak2PRIM));
-} /* End of 'AK2_RndPrimFree' function *//* END OF 'RENDER.C' FILE */
+} /* End of 'AK2_RndPrimFree' function */
+
+/* END OF 'RENDER.C' FILE */

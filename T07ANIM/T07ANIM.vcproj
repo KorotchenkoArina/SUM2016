@@ -233,6 +233,14 @@
 				>
 			</File>
 			<File
+				RelativePath=".\RENDER.H"
+				>
+			</File>
+			<File
+				RelativePath=".\UNITS.H"
+				>
+			</File>
+			<File
 				RelativePath=".\VEC.H"
 				>
 			</File>

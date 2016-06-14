@@ -5,6 +5,7 @@ File:MAIN.C
 Date: 12.06.2016
 */
 #include "anim.h"
+#include "units.h"
 
 #pragma warning(disable: 4244)
 
@@ -15,47 +16,49 @@ LRESULT CALLBACK MyWindowFunc( HWND hWnd, UINT Msg, WPARAM wParam, LPARAM lParam
 /* The main program function */
 INT WINAPI WinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, CHAR *CmdLine, INT ShowCmd )
 {
-   WNDCLASS wc;
-   HWND hWnd;
-   MSG msg;
-   SetDbgMemHooks();
+  WNDCLASS wc;
+  HWND hWnd;
+  MSG msg;
+  SetDbgMemHooks();
 
-   /* Create window class */
-   wc.style = CS_VREDRAW | CS_HREDRAW;
-   wc.cbClsExtra = 0;
-   wc.cbWndExtra = 0;
-   wc.hbrBackground = (HBRUSH)COLOR_WINDOW;
-   wc.hCursor = LoadCursor(NULL, IDC_ARROW);
-   wc.hIcon = LoadIcon(NULL,IDI_ERROR);
-   wc.lpszMenuName = NULL;
-   wc.hInstance = hInstance;
-   wc.lpfnWndProc = MyWindowFunc;
-   wc.lpszClassName = WND_CLASS_NAME;
+  /* Create window class */
+  wc.style = CS_VREDRAW | CS_HREDRAW;
+  wc.cbClsExtra = 0;
+  wc.cbWndExtra = 0;
+  wc.hbrBackground = (HBRUSH)COLOR_WINDOW;
+  wc.hCursor = LoadCursor(NULL, IDC_ARROW);
+  wc.hIcon = LoadIcon(NULL,IDI_ERROR);
+  wc.lpszMenuName = NULL;
+  wc.hInstance = hInstance;
+  wc.lpfnWndProc = MyWindowFunc;
+  wc.lpszClassName = WND_CLASS_NAME;
 
-   if (!RegisterClass(&wc))
-   {
-     MessageBox(NULL, "Error register window class","ERROR", MB_OK | MB_ICONERROR);
-     return 0;
-   }
+  if (!RegisterClass(&wc))
+  {
+    MessageBox(NULL, "Error register window class","ERROR", MB_OK | MB_ICONERROR);
+    return 0;
+  }
 
-   /* Create window */
-   hWnd =
-     CreateWindow(WND_CLASS_NAME,
-     "o Ball o", 
-     WS_OVERLAPPEDWINDOW,
-     CW_USEDEFAULT, CW_USEDEFAULT,
-     CW_USEDEFAULT, CW_USEDEFAULT,
-     NULL,
-     NULL,
-     hInstance,
-     NULL);
-   ShowWindow(hWnd, SW_SHOWNORMAL);
-   UpdateWindow(hWnd);
+  /* Create window */
+  hWnd =
+    CreateWindow(WND_CLASS_NAME,
+    "o Ball o", 
+    WS_OVERLAPPEDWINDOW,
+    CW_USEDEFAULT, CW_USEDEFAULT,
+    CW_USEDEFAULT, CW_USEDEFAULT,
+    NULL,
+    NULL,
+    hInstance,
+    NULL);
+  ShowWindow(hWnd, SW_SHOWNORMAL);
+  UpdateWindow(hWnd);
 
-   /* Run message loop */
-   while (GetMessage(&msg, NULL, 0, 0))
-     DispatchMessage(&msg);
-   return msg.wParam;
+  AK2_AnimAddUnit(AK2_UnitCreateCube());
+
+  /* Run message loop */
+  while (GetMessage(&msg, NULL, 0, 0))
+    DispatchMessage(&msg);
+  return msg.wParam;
 } /* End of MinMain function */
 
 /* Window message handle function */

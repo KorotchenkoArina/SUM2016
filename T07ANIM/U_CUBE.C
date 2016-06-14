@@ -8,6 +8,7 @@ Date: 12.06.2016
 #include <time.h>                   
 
 #include "anim.h"
+#include "render.h"
 
 /* Cube unit representation type */
 typedef struct
@@ -42,7 +43,9 @@ ak2PRIM Cube =
 {
  CubeP, sizeof(CubeP) / sizeof(CubeP[0]),
  CubeE, sizeof(CubeE) / sizeof(CubeE[0])
-};static VOID AK2_UnitInit( ak2UNIT_CUBE *Uni, ak2ANIM *Ani )
+};
+
+static VOID AK2_UnitInit( ak2UNIT_CUBE *Uni, ak2ANIM *Ani )
 {
   Uni->Pos = VecSet(Rnd0() * 5, Rnd0() * 5, Rnd0() * 5);
   Uni->TimerShift = Rnd1() * 59;
@@ -87,8 +90,11 @@ static VOID AK2_UnitRender( ak2UNIT_CUBE *Uni, ak2ANIM *Ani )
   AK2_RndMatrWorld = MatrMulMatr(MatrScale(VecSet(0.1, 0.1, 0.1)),
                      MatrMulMatr(MatrRotateY((Uni->TimerSpeed * Ani->Time) * 30 + Uni->TimerShift),
                                              MatrTranslate(VecAddVec(Uni->Pos,
-                                                                    VecMulNum(VecSet(Ani->JX, Ani->JY, Ani->JZ), 3)))));  AK2_RndPrimDraw(&Uni->Pr);  /* !!! */
-} /* End of 'AK2_UnitRender' function */ak2UNIT * AK2_UnitCreateCube( VOID )
+                                                                    VecMulNum(VecSet(Ani->JX, Ani->JY, Ani->JZ), 3)))));
+  AK2_RndPrimDraw(&Cube);  /* !!! */
+} /* End of 'AK2_UnitRender' function */
+
+ak2UNIT * AK2_UnitCreateCube( VOID )
 {
   ak2UNIT_CUBE *Uni;
 
