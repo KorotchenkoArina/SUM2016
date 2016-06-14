@@ -54,11 +54,39 @@ struct tagak2ANIM
     JX, JY, JZ, JR;               // Joystick axes
 };
 
+__inline DBL Rnd0( VOID )
+{
+  return (DBL)rand() / RAND_MAX;
+} 
+__inline DBL Rnd1( VOID )
+{
+  return 2.0 * rand() / RAND_MAX - 1;
+}
+
+extern MATR 
+      AK2_RndMatrWorld,
+      AK2_RndMatrView,
+      AK2_RndMatrProj;
+extern DBL
+  AK2_RndProjDist, /* Near clip plane */
+  AK2_RndFarClip,  /* Far clip plane */
+  AK2_RndProjSize; /* Project plane size */
+
+
 // Global mouse wheel delta value
 extern INT AK2_MouseWheel;
 
 // Global animation context
 extern ak2ANIM AK2_Anim;
+
+/* Primitive representation type */
+typedef struct
+{
+ VEC *P; /* Primitive points array */
+ INT NumOfP; /* Point array size */
+ INT (*Edges)[2]; /* Edges array - array of point pairs */
+ INT NumOfE; /* Edges array size */
+} ak2PRIM;
 
 VOID AK2_AnimInit( HWND hWnd ); 
 VOID AK2_AnimClose( VOID ); 
@@ -70,5 +98,6 @@ VOID AK2_AnimAddUnit( ak2UNIT *Uni );
 VOID AK2_AnimDoExit( VOID );
 VOID AK2_AnimFullSCreen( VOID );
 ak2UNIT * AK2_AnimUnitCreate( INT Size );
+VOID AK2_RndPrimDraw( ak2PRIM *Pr );
 #endif /* __ANIM_H_ */
 

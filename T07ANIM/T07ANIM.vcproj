@@ -199,7 +199,15 @@
 				>
 			</File>
 			<File
+				RelativePath=".\RENDER.C"
+				>
+			</File>
+			<File
 				RelativePath=".\T07ANIM.C"
+				>
+			</File>
+			<File
+				RelativePath=".\U_CUBE.C"
 				>
 			</File>
 			<File

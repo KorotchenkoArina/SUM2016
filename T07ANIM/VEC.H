@@ -129,6 +129,15 @@ __inline VEC PointTransform4( VEC V, MATR M )
 }
 // End of "PointTransform4" function
 
+__inline VEC VecMulMatr( VEC V, MATR M )
+{
+  FLT w = V.X * M.A[0][3] + V.Y * M.A[1][3] + V.Z * M.A[2][3] + M.A[3][3];
+
+  return VecSet((V.X * M.A[0][0] + V.Y * M.A[1][0] + V.Z * M.A[2][0] + M.A[3][0]) / w,
+                (V.X * M.A[0][1] + V.Y * M.A[1][1] + V.Z * M.A[2][1] + M.A[3][1]) / w,
+                (V.X * M.A[0][2] + V.Y * M.A[1][2] + V.Z * M.A[2][2] + M.A[3][2]) / w);
+}  
+
 // Matrix
 
 __inline MATR MatrTranslate( VEC D )
@@ -348,6 +357,20 @@ __inline MATR MatrInverse( MATR M )
                              M.A[2][0], M.A[2][1], M.A[2][2]) / det;
 }
 // End of "MatrInverse" function
+
+__inline MATR MatrFrustum( DBL l, DBL r, DBL b, DBL t, DBL n, DBL f ){
+  MATR M =
+  {
+    {
+      {(2 * n) / (r - l),                 0,                      0,  0},
+      {                0, (2 * n) / (t - b),                      0,  0},
+      {(r + l) / (r - l), (t + b) / (t - b),     -(f + n) / (f - n), -1},
+      {                0,                 0, -(2 * n * f) / (f - n),  0}
+    }
+  };
+
+  return M;
+}
 
 #endif /* __VEC_H_ */
 

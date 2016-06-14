@@ -1,3 +1,9 @@
+/*
+Programmer: AK2
+Programm: T07ANIM
+File:MAIN.C
+Date: 12.06.2016
+*/
 #include "anim.h"
 
 #pragma warning(disable: 4244)
