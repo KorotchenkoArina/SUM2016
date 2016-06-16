@@ -179,31 +179,35 @@
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}"
 			>
 			<File
-				RelativePath="..\T07ANIM\ANIM.C"
+				RelativePath=".\ANIM.C"
 				>
 			</File>
 			<File
-				RelativePath="..\T07ANIM\LOADPRIM.C"
+				RelativePath=".\LOADOBJ.C"
 				>
 			</File>
 			<File
-				RelativePath="..\T07ANIM\MAIN.C"
+				RelativePath=".\MAIN.C"
 				>
 			</File>
 			<File
-				RelativePath="..\T07ANIM\RENDER.C"
+				RelativePath=".\RENDER.C"
 				>
 			</File>
 			<File
-				RelativePath="..\T07ANIM\U_CUBE.C"
+				RelativePath=".\SHADERS.C"
 				>
 			</File>
 			<File
-				RelativePath="..\T07ANIM\UNITS.C"
+				RelativePath=".\U_BOAT.C"
 				>
 			</File>
 			<File
-				RelativePath="..\T07ANIM\VEC.C"
+				RelativePath=".\U_CONTROL.C"
+				>
+			</File>
+			<File
+				RelativePath=".\UNITS.C"
 				>
 			</File>
 		</Filter>
@@ -213,23 +217,27 @@
 			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}"
 			>
 			<File
-				RelativePath="..\T07ANIM\ANIM.H"
+				RelativePath=".\ANIM.H"
 				>
 			</File>
 			<File
-				RelativePath="..\T07ANIM\DEF.H"
+				RelativePath=".\DEF.H"
 				>
 			</File>
 			<File
-				RelativePath="..\T07ANIM\RENDER.H"
+				RelativePath=".\RENDER.H"
 				>
 			</File>
 			<File
-				RelativePath="..\T07ANIM\UNITS.H"
+				RelativePath=".\SHADERS.H"
 				>
 			</File>
 			<File
-				RelativePath="..\T07ANIM\VEC.H"
+				RelativePath=".\UNITS.H"
+				>
+			</File>
+			<File
+				RelativePath=".\VEC.H"
 				>
 			</File>
 		</Filter>

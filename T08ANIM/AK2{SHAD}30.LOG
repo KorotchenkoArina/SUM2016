@@ -1,0 +1,2 @@
+FRAG: 0(76) : error C7011: implicit cast from "int" to "bool"
+
