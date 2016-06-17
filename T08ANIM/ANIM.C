@@ -79,7 +79,7 @@ VOID AK2_AnimInit( HWND hWnd )
 
   
   AK2_RndMatrWorld  = MatrIdentity();
-  AK2_RndMatrView = MatrView(VecSet(15, 15, 15), VecSet(0, 0, 0), VecSet(0, 1, 0));
+  AK2_RndMatrView = MatrView(VecSet(100, 100, 100), VecSet(0, 0, 0), VecSet(1, 1, 1));
   AK2_RndMatrProj = MatrFrustum(-1, 1, -1, 1, 1, 100);
 
 
@@ -188,31 +188,31 @@ VOID  AK2_AnimRender(VOID)
   if (joyGetNumDevs() > 0)
   {
     JOYCAPS jc;
-
+    /* Get joystick info */
     if (joyGetDevCaps(JOYSTICKID1, &jc, sizeof(jc)) == JOYERR_NOERROR)
     {
       
       JOYINFOEX ji;
+
       ji.dwSize = sizeof(JOYINFOEX);                                         
       ji.dwFlags = JOY_RETURNALL;
       if (joyGetPosEx(JOYSTICKID1, &ji) == JOYERR_NOERROR)
       {
-         /*buttons*/
+         /* Buttons */
         for (i = 0; i < 32; i++)
-          AK2_Anim.JBut[i] = (ji.dwButtons >> i) & 1;
+          AK2_Anim.JBut[i] = (ji.dwButtons >> i) & 1;        
           
 
-        /*axes*/                                                  
+        /* Axes */                                                  
          AK2_Anim.JX = AK2_GET_JOYSTICK_AXIS(X);
          AK2_Anim.JY = AK2_GET_JOYSTICK_AXIS(Y);    
          AK2_Anim.JZ = AK2_GET_JOYSTICK_AXIS(Z);
          AK2_Anim.JR = AK2_GET_JOYSTICK_AXIS(R);
-         AK2_Anim.JPov = ji.dwPOV == 0xFFFF ? 0 : ji.dwPOV / 4500 + 1;        
+         AK2_Anim.JPov = ji.dwPOV == 0xFFFF ? 0 : ji.dwPOV / 4500 + 1;       /* !!!!! */ 
       }
     }
   }
-
-
+  /* Send response to all units */
   for (i = 0; i < AK2_Anim.NumOfUnits; i++)
     AK2_Anim.Units[i]->Response(AK2_Anim.Units[i], &AK2_Anim);
 
