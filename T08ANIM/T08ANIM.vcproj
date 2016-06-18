@@ -183,7 +183,15 @@
 				>
 			</File>
 			<File
+				RelativePath=".\GRID.C"
+				>
+			</File>
+			<File
 				RelativePath=".\LOADOBJ.C"
+				>
+			</File>
+			<File
+				RelativePath=".\LOADPRIM.C"
 				>
 			</File>
 			<File

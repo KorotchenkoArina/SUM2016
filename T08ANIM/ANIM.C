@@ -31,12 +31,12 @@ DBL
 INT AK2_MouseWheel;   
 ak2ANIM AK2_Anim;
 
-static UNIT64;
-  AK2_StartTime;
-  AK2_OldTime;
-  AK2_OldTimeFPS;
-  AK2_PauseTime;
-  AK2_TimePerSec;
+static UINT64
+  AK2_StartTime,
+  AK2_OldTime,
+  AK2_OldTimeFPS,
+  AK2_PauseTime,
+  AK2_TimePerSec,
   AK2_FrameCounter;
 
 VOID AK2_AnimInit( HWND hWnd )
@@ -74,7 +74,7 @@ VOID AK2_AnimInit( HWND hWnd )
   QueryPerformanceFrequency(&t);
   AK2_TimePerSec = t. QuadPart;
   QueryPerformanceCounter(&t);
-  AK2_StartTime = AK2_OldTime = AK2_OldTimeFPS = t. QuadPart;
+  AK2_StartTime = AK2_OldTime = AK2_OldTimeFPS = t.QuadPart;
   AK2_PauseTime = 0;
 
   

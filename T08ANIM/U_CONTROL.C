@@ -71,18 +71,18 @@ static VOID AK2_UnitResponse( ak2UNIT_CONTROL *Uni, ak2ANIM *Ani )
   
   Uni->Pos = VecAddVec(Uni->Pos, VecSet(x, y, z));
   /* Uni->Pos.Y += Ani->JY * Ani->GlobalDeltaTime;*/ 
-  Uni->Pos = VecTransform43(Uni->Pos, MatrRotateY(3000 * Ani->JY * Ani->GlobalDeltaTime));
-  Uni->Pos = VecTransform43(Uni->Pos, MatrRotateX(3000 * Ani->JX * Ani->GlobalDeltaTime));
+  Uni->Pos = VecTransform43(Uni->Pos, MatrRotateY(30 * Ani->JY * Ani->GlobalDeltaTime));
+  Uni->Pos = VecTransform43(Uni->Pos, MatrRotateX(30 * Ani->JX * Ani->GlobalDeltaTime));
 
   if (Ani->Keys[VK_LBUTTON])
   {
-    Uni->Pos = VecTransform43(Uni->Pos, MatrRotateY(3000 * Ani->Mdx * Ani->GlobalDeltaTime));  /* !!! */
-    Uni->Pos = VecTransform43(Uni->Pos, MatrRotate(3000 * Ani->Mdy * Ani->GlobalDeltaTime,    /* !!! */
+    Uni->Pos = VecTransform43(Uni->Pos, MatrRotateY(30 * Ani->Mdy * Ani->GlobalDeltaTime));  /* !!! */
+    Uni->Pos = VecTransform43(Uni->Pos, MatrRotate(30 * Ani->Mdx * Ani->GlobalDeltaTime,    /* !!! */
                  VecNormalize(VecCrossVec(VecNormalize(VecSubVec(at, Uni->Pos)), up1))));
   }
 
-  Uni->Pos = VecTransform43(Uni->Pos, MatrRotateY(3000 * Ani->Keys[VK_RIGHT] * Ani->GlobalDeltaTime));      /*!!!*/
-  Uni->Pos = VecTransform43(Uni->Pos, MatrRotateY(-3000 * Ani->Keys[VK_LEFT] * Ani->GlobalDeltaTime));       
+  Uni->Pos = VecTransform43(Uni->Pos, MatrRotateY(60 * Ani->Keys[VK_RIGHT] * Ani->GlobalDeltaTime));      /*!!!*/
+  Uni->Pos = VecTransform43(Uni->Pos, MatrRotateY(-60 * Ani->Keys[VK_LEFT] * Ani->GlobalDeltaTime));       
 
   r = VecLen(Uni->Pos);
   Uni->Pos = VecMulNum(Uni->Pos, (r + -Ani->Mdz * Ani->GlobalDeltaTime) / r);

@@ -30,7 +30,7 @@ vec3 Shade( vec3 N )
 {
   vec3 L = normalize(vec3(1, 1, 1));
   vec3 col = Ka;
-  vec3 V = normalize(mat3(MatrView) * vec3(10, 100, 10)); // should be camera location
+  vec3 V = normalize(mat3(MatrView) * vec3(1000, 1000, 1000)); // should be camera location
 
   // Diffuse
   float nl = dot(L, N);

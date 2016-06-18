@@ -422,7 +422,6 @@ __inline MATR MatrView( VEC Loc, VEC At, VEC Up1 )
       {-VecDotVec(Loc, Right), -VecDotVec(Loc, Up), VecDotVec(Loc, Dir), 1}
     }
   };
-
   return M;
 }
 

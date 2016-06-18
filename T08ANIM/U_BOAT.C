@@ -36,9 +36,9 @@ typedef struct
  */
 static VOID AK2_UnitInit( ak2UNIT_CUBE *Uni, ak2ANIM *Ani )
 {
-  Uni->Pos = VecSet(Rnd0() * 5, Rnd0() * 5, Rnd0() * 5);
+  Uni->Pos = VecSet(Rnd0() * 5, Rnd0() * 10, Rnd0() * 5);
   Uni->TimerShift = Rnd1() * 59;
-  Uni->TimerSpeed = Rnd1() * 8;
+  Uni->TimerSpeed = Rnd1() * 8;             /* !!!!!!!!!!!!!!!! */
   AK2_RndObjLoad(&Uni->Pr, "models\\boat.g3d");
   AK2_RndObjLoad(&Uni->Lh, "models\\mount.g3d");
 } /* End of 'AK2_UnitInit' function */
@@ -83,7 +83,7 @@ static VOID AK2_UnitResponse( ak2UNIT_CUBE *Uni, ak2ANIM *Ani )
  */
 static VOID AK2_UnitRender( ak2UNIT_CUBE *Uni, ak2ANIM *Ani )
 {
-  AK2_RndMatrWorld = MatrMulMatr(MatrScale(VecSet(0.0025, 0.0025, 0.0025)),MatrTranslate(VecAddVec(Uni->Pos,VecMulNum(VecSet(Ani->JX, Ani->JY, Ani->JZ), 3))));
+  AK2_RndMatrWorld = MatrMulMatr(MatrScale(VecSet(0.002, 0.002, 0.002)),MatrTranslate(VecAddVec(Uni->Pos,VecMulNum(VecSet(Ani->JX, Ani->JY, Ani->JZ), 3))));
   AK2_RndObjDraw(&Uni->Pr);
 
   AK2_RndMatrWorld = MatrScale(VecSet(20, 3, 20));
